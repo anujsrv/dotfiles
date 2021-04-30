@@ -31,6 +31,8 @@ Plug 'morhetz/gruvbox'
 " run async builds and test suites
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
+" for running tests
+Plug 'vim-test/vim-test'
 
 " for linting + as a LSP client
 Plug 'dense-analysis/ale'
@@ -96,8 +98,12 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" to enable ALE logging
+" let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" call ch_logfile(expand('/tmp/chlogfile.log'), 'w')
+
 let g:ale_linters = {
+\   'python': ['flake8'],
 \   'go': ['gopls'],
 \   'c': ['clang'],
 \   'java': ['eclipselsp'],
@@ -107,6 +113,16 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
 \   'go': ['gofmt'],
+\}
+
+let test#strategy = "dispatch"
+let test#python#runner = 'pytest'
+let test#java#runner = 'gradletest'
+let test#java#gradletest#executable = 'ligradle test'
+
+let g:dispatch_compilers = {
+\ 'pytest': 'pylint',
+\ 'ligradle test': 'gradle',
 \}
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
@@ -151,7 +167,7 @@ nmap <C-q> :q<CR>
 let mapleader = "\<Space>"
 nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>nu :set nu!<CR>
-nnoremap <leader>vi :tabedit ~/.vimrc<CR>
+nnoremap <leader>vi :edit ~/.vimrc<CR>
 nnoremap <leader>so :source ~/.vimrc<CR>
 nnoremap <leader>at :ALEToggle<CR>
 
@@ -173,8 +189,24 @@ nnoremap <leader>t :bnext<CR>
 nnoremap <leader>T :bprev<CR>
 
 nnoremap <leader>doc :ALEHover<CR>
-nnoremap <C-S-d> :ALEGoToDefinition<CR>
+nnoremap <leader>gk :ALEGoToDefinition<CR>
 
 nnoremap gb :call FZFOpen(':Buffers')<CR>
 
 nnoremap gmb :Dispatch mint build<CR>
+
+" temp solution for gopls installation for projects
+" having different go versions
+function! GoPlsInstall()
+  let ver = system('go version')
+  let go_get_cmd = 'GO111MODULE=on go get -v golang.org/x/tools/gopls@latest'
+  if match(ver, 'go1.12')
+    call system('mkdir -p /tmp/gopls')
+    let out = system('cd /tmp/gopls && ' . go_get_cmd)
+  else
+    let out = system(go_get_cmd)
+  endif
+  echom out
+endfunction
+
+command! -nargs=* GoPlsInstall call GoPlsInstall()
