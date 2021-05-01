@@ -13,6 +13,9 @@ set relativenumber
 set hlsearch
 set scrolloff=8
 
+" eases up visual selection and avoids term scroll issues
+set mouse=a
+
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
 
@@ -37,13 +40,18 @@ Plug 'vim-test/vim-test'
 " for linting + as a LSP client
 Plug 'dense-analysis/ale'
 
+" for running tests
+Plug 'vim-test/vim-test'
+
 " minimalistic auto-completion
 Plug 'ajh17/VimCompletesMe'
 
 Plug 'preservim/tagbar'
 Plug 'unblevable/quick-scope'
 Plug 'moll/vim-bbye'
+
 " All of your Plugins must be added before the following line
+
 call plug#end()
 
 filetype plugin indent on    " required
@@ -103,10 +111,19 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " call ch_logfile(expand('/tmp/chlogfile.log'), 'w')
 
 let g:ale_linters = {
-\   'python': ['flake8'],
+\   'python': ['flake8', 'pyright'],
 \   'go': ['gopls'],
 \   'c': ['clang'],
 \   'java': ['eclipselsp'],
+\}
+
+let g:ale_go_gopls_executable = $HOME . '/.local/share/installed-lsp-servers/gopls'
+let g:ale_python_pyright_executable = $HOME . '/.local/share/installed-lsp-servers/pyright-langserver'
+" need to start vim with venv activated
+let g:ale_python_pyright_config = {
+\ 'python': {
+\   'venvPath': $VIRTUAL_ENV,
+\ },
 \}
 
 let g:ale_fixers = {
@@ -195,18 +212,10 @@ nnoremap gb :call FZFOpen(':Buffers')<CR>
 
 nnoremap gmb :Dispatch mint build<CR>
 
-" temp solution for gopls installation for projects
-" having different go versions
-function! GoPlsInstall()
-  let ver = system('go version')
-  let go_get_cmd = 'GO111MODULE=on go get -v golang.org/x/tools/gopls@latest'
-  if match(ver, 'go1.12')
-    call system('mkdir -p /tmp/gopls')
-    let out = system('cd /tmp/gopls && ' . go_get_cmd)
-  else
-    let out = system(go_get_cmd)
-  endif
-  echom out
+" created this for lack of a simple, lightweight lsp installer plugin
+" supports gopls, pyright installation right now
+function! LspInstall(language)
+    let out = system('~/.vim/installer/lsp-installers.sh ' . a:language)
+    echom out
 endfunction
-
-command! -nargs=* GoPlsInstall call GoPlsInstall()
+command! -nargs=* LspInstall call LspInstall(<q-args>)
