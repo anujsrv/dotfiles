@@ -13,9 +13,6 @@ set relativenumber
 set hlsearch
 set scrolloff=8
 
-" eases up visual selection and avoids term scroll issues
-set mouse=a
-
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
 
@@ -39,9 +36,6 @@ Plug 'vim-test/vim-test'
 
 " for linting + as a LSP client
 Plug 'dense-analysis/ale'
-
-" for running tests
-Plug 'vim-test/vim-test'
 
 " minimalistic auto-completion
 Plug 'ajh17/VimCompletesMe'
@@ -112,7 +106,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:ale_linters = {
 \   'python': ['flake8', 'pyright'],
-\   'go': ['gopls'],
+\   'go': ['govet', 'gopls'],
 \   'c': ['clang'],
 \   'java': ['eclipselsp'],
 \}
@@ -196,9 +190,9 @@ nnoremap <leader>rc :%s///gc<Left><Left><Left>
 
 xnoremap <leader>r :s///g<Left><Left>
 xnoremap <leader>rc :s///gc<Left><Left><Left>
+
 nnoremap <leader>gd :Git diff<CR>
 nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gc :Gcommit<CR>
 
 nnoremap <leader>tag :TagbarToggle<CR>
 
