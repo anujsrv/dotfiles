@@ -204,7 +204,8 @@ nnoremap <leader>gk :ALEGoToDefinition<CR>
 
 nnoremap gb :call FZFOpen(':Buffers')<CR>
 
-nnoremap gmb :Dispatch mint build<CR>
+" nnoremap gmb :Dispatch mint build<CR>
+nnoremap gmb :botright terminal ++rows=10 mint build<CR>
 
 " created this for lack of a simple, lightweight lsp installer plugin
 " supports gopls, pyright installation right now
