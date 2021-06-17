@@ -16,6 +16,13 @@ set scrolloff=8
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
 
+" install vim-plug and initial set of plugins on first start
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 set rtp+=~/.fzf
 
@@ -134,6 +141,7 @@ let test#java#gradletest#executable = 'ligradle test'
 let g:dispatch_compilers = {
 \ 'pytest': 'pylint',
 \ 'ligradle test': 'gradle',
+\ 'mint build': 'ligradle',
 \}
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
@@ -204,8 +212,11 @@ nnoremap <leader>gk :ALEGoToDefinition<CR>
 
 nnoremap gb :call FZFOpen(':Buffers')<CR>
 
-" nnoremap gmb :Dispatch mint build<CR>
-nnoremap gmb :botright terminal ++rows=10 mint build<CR>
+if exists(':terminal')
+    nnoremap gmb :botright terminal ++rows=10 mint build<CR>
+else
+    nnoremap gmb :Dispatch mint build<CR>
+endif
 
 " created this for lack of a simple, lightweight lsp installer plugin
 " supports gopls, pyright installation right now
