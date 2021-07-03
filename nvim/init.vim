@@ -44,6 +44,11 @@ Plug 'preservim/tagbar'
 Plug 'unblevable/quick-scope'
 Plug 'moll/vim-bbye'
 
+" telescope.nvim
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " All of your Plugins must be added before the following line
@@ -69,6 +74,7 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
 set background=dark
+let $BAT_THEME='gruvbox-dark'
 colorscheme gruvbox
 
 " http://github.com/scrooloose/nerdtree/issues/489
