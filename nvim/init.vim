@@ -157,7 +157,10 @@ function! FZFOpen(cmd)
     exe a:cmd
 endfunction
 
-let g:fzf_layout = { 'down': '40%' }
+"let g:fzf_layout = { 'down': '40%' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
+let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-up,ctrl-d:preview-down"
+
 let g:fzf_action = {
   \ 'return': 'edit',
   \ 'ctrl-t': 'tabedit',
