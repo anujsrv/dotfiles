@@ -7,7 +7,8 @@ Essential dotfiles for setting up dev environment
 1. [vim 8 and above](#vim-8-and-above)
 2. [neovim 0.5 and above](#neovim-0.5-and-above)
 3. [fzf (fuzzy finder)](#fzf)
-4. [bat (for syntax highlighting in fzf preview window)](#bat)
+4. [ripgrep (Rg)](#Rg)
+5. [bat (for syntax highlighting in fzf preview window)](#bat)
 ### vim 8 and above
 #### For centos
 ```bash
@@ -30,6 +31,7 @@ brew upgrade vim
 ```
 ### neovim 0.5 and above
 Follow instructions here - https://github.com/neovim/neovim/releases
+
 ### fzf
 #### For centos
 ```bash
@@ -40,6 +42,16 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ```bash
 brew install fzf
 ```
+
+### Rg
+#### For centos
+Follow instructions here: https://github.com/BurntSushi/ripgrep#installation
+
+#### For macOs
+```bash
+brew install ripgrep
+```
+
 ### bat
 #### For centos
 ```bash

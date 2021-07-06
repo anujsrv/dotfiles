@@ -166,7 +166,7 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tabedit',
   \ 'ctrl-v': 'vsplit' }
 let g:fzf_preview_window = 'right:60%'
-autocmd! VimEnter *  command! -bang -nargs=? -complete=dir FZF call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+autocmd! VimEnter *  command! -bang -nargs=? -complete=dir FZF call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
 nnoremap <C-p> :call FZFOpen(':FZF')<CR>
 
 command! -bang -nargs=* Rg
@@ -201,6 +201,7 @@ nnoremap <leader>rc :%s///gc<Left><Left><Left>
 
 xnoremap <leader>r :s///g<Left><Left>
 xnoremap <leader>rc :s///gc<Left><Left><Left>
+
 nnoremap <leader>gd :Git diff<CR>
 nnoremap <leader>gs :Git<CR>
 
@@ -219,8 +220,8 @@ nnoremap gmb :Dispatch mint build<CR>
 " created this for lack of a simple, lightweight lsp installer plugin
 " supports gopls, pyright installation right now
 function! LspInstall(language)
-    let out = system('~/.vim/installer/lsp-installers.sh ' . a:language)
-    echom out
+    let cmd = $HOME . '/.vim/installer/lsp-installers.sh ' . a:language
+    execute 'botright terminal ++rows=10 ' . cmd
 endfunction
 command! -nargs=* LspInstall call LspInstall(<q-args>)
 
