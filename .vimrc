@@ -44,6 +44,10 @@ Plug 'vim-test/vim-test'
 " for linting + as a LSP client
 Plug 'dense-analysis/ale'
 
+" enhancing vim's grammar
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
 " minimalistic auto-completion
 Plug 'ajh17/VimCompletesMe'
 
@@ -159,14 +163,14 @@ endfunction
 
 "let g:fzf_layout = { 'down': '40%' }
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
-let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-up,ctrl-d:preview-down"
+let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-f:preview-top,ctrl-l:preview-bottom"
 
 let g:fzf_action = {
   \ 'return': 'edit',
   \ 'ctrl-t': 'tabedit',
   \ 'ctrl-v': 'vsplit' }
 let g:fzf_preview_window = 'right:60%'
-autocmd! VimEnter *  command! -bang -nargs=? -complete=dir FZF call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
+autocmd! VimEnter *  command! -bang -nargs=? -complete=dir FZF call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline', '--border']}), <bang>0)
 nnoremap <C-p> :call FZFOpen(':FZF')<CR>
 
 command! -bang -nargs=* Rg
