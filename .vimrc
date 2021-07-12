@@ -190,6 +190,16 @@ vnoremap <C-j> :m '>+1<CR>gvgv
 nmap <C-s> :w<CR>
 nmap <C-q> :q<CR>
 
+nnoremap [q :cprev<CR>
+nnoremap ]q :cnext<CR>
+inoremap [q :cprev<CR>
+inoremap ]q :cnext<CR>
+
+nnoremap [l :lprev<CR>
+nnoremap ]l :lnext<CR>
+inoremap [l :lprev<CR>
+inoremap ]l :lnext<CR>
+
 let mapleader = "\<Space>"
 nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>nu :set nu!<CR>
@@ -232,3 +242,8 @@ function! LspInstall(language)
     execute 'botright terminal ++rows=10 ' . cmd
 endfunction
 command! -nargs=* LspInstall call LspInstall(<q-args>)
+
+augroup xmlfold
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
