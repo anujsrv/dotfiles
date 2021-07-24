@@ -12,6 +12,7 @@ set nu
 set relativenumber
 set hlsearch
 set scrolloff=8
+set mouse=a
 
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
@@ -137,6 +138,10 @@ let g:ale_fixers = {
 \   'go': ['gofmt'],
 \}
 
+" for popup on ALEHover
+let g:ale_hover_to_floating_preview = 1
+let g:ale_floating_window_border = repeat([''], 6)
+
 let test#strategy = "dispatch"
 let test#python#runner = 'pytest'
 let test#java#runner = 'gradletest'
@@ -224,7 +229,7 @@ nnoremap <leader>tag :TagbarToggle<CR>
 nnoremap <leader>t :bnext<CR>
 nnoremap <leader>T :bprev<CR>
 
-nnoremap <leader>doc :ALEHover<CR>
+nnoremap <silent>K :ALEHover<CR>
 nnoremap <leader>gk :ALEGoToDefinition<CR>
 
 nnoremap gb :call FZFOpen(':Buffers')<CR>
