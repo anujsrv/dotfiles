@@ -20,6 +20,12 @@ elif [ "$1" = "go" ]; then
         GOPATH=$(pwd) GO111MODULE=on go clean -modcache
     fi
     rm -rf src pkg 2> /dev/null
+elif [ "$1" = "java" ]; then
+    echo "installing eclipse-jdtls"
+    wget "https://ftp.fau.de/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz"
+    mkdir eclipse-jdtls
+    tar -xvf jdt-language-server-latest.tar.gz -C eclipse-jdtls
+    rm jdt-language-server-latest.tar.gz
 else
     echo "unknown option: $1"
 fi

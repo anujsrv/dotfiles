@@ -125,6 +125,14 @@ let g:ale_linters = {
 
 let g:ale_go_gopls_executable = $HOME . '/.local/share/installed-lsp-servers/gopls'
 let g:ale_python_pyright_executable = $HOME . '/.local/share/installed-lsp-servers/pyright-langserver'
+let g:ale_java_eclipselsp_path = $HOME . '/.local/share/installed-lsp-servers/eclipse-jdtls'
+let g:ale_java_eclipselsp_executable = '/export/apps/jdk/JDK-11_0_8-msft/bin/java'
+
+augroup ale_jdtls
+    autocmd!
+    au BufRead,BufNewFile *.java let b:ale_command_wrapper = 'GRADLE_HOME=' . $HOME . '/.gradle/ligradle/gradle-5.2.1'
+augroup END
+
 " need to start vim with venv activated
 let g:ale_python_pyright_config = {
 \ 'python': {
@@ -140,7 +148,7 @@ let g:ale_fixers = {
 
 " for popup on ALEHover
 let g:ale_hover_to_floating_preview = 1
-let g:ale_floating_window_border = repeat([''], 6)
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
 
 let test#strategy = "dispatch"
 let test#python#runner = 'pytest'
