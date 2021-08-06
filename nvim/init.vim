@@ -12,6 +12,7 @@ set nu
 set relativenumber
 set hlsearch
 set scrolloff=8
+set mouse=a
 
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
@@ -36,6 +37,10 @@ Plug 'vim-test/vim-test'
 
 " for linting + as a LSP client
 Plug 'dense-analysis/ale'
+
+" enhancing vim's grammar
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 
 " minimalistic auto-completion
 Plug 'ajh17/VimCompletesMe'
@@ -121,6 +126,14 @@ let g:ale_linters = {
 
 let g:ale_go_gopls_executable = $HOME . '/.local/share/installed-lsp-servers/gopls'
 let g:ale_python_pyright_executable = $HOME . '/.local/share/installed-lsp-servers/pyright-langserver'
+let g:ale_java_eclipselsp_path = $HOME . '/.local/share/installed-lsp-servers/eclipse-jdtls'
+let g:ale_java_eclipselsp_executable = '/export/apps/jdk/JDK-11_0_8-msft/bin/java'
+
+augroup ale_jdtls
+    autocmd!
+    au BufRead,BufNewFile *.java let b:ale_command_wrapper = 'GRADLE_HOME=' . $HOME . '/.gradle/ligradle/gradle-5.2.1'
+augroup END
+
 " need to start vim with venv activated
 let g:ale_python_pyright_config = {
 \ 'python': {
@@ -134,6 +147,10 @@ let g:ale_fixers = {
 \   'go': ['gofmt'],
 \}
 
+" for popup on ALEHover
+let g:ale_hover_to_floating_preview = 1
+let g:ale_floating_window_border = []
+
 let test#strategy = "dispatch"
 let test#python#runner = 'pytest'
 let test#java#runner = 'gradletest'
@@ -146,17 +163,6 @@ let g:dispatch_compilers = {
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-function! FZFOpen(cmd)
-    " If more than 1 window, and buffer is not modifiable or file type is
-    " NERD tree or Quickfix type
-    if winnr('$') > 1 && (!&modifiable || &ft == 'nerdtree' || &ft == 'qf')
-        " Move one window to the right, then up
-        wincmd l
-        wincmd k
-    endif
-    exe a:cmd
-endfunction
-
 "let g:fzf_layout = { 'down': '40%' }
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-up,ctrl-d:preview-down"
@@ -166,8 +172,7 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tabedit',
   \ 'ctrl-v': 'vsplit' }
 let g:fzf_preview_window = 'right:60%'
-autocmd! VimEnter *  command! -bang -nargs=? -complete=dir FZF call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
-nnoremap <C-p> :call FZFOpen(':FZF')<CR>
+nnoremap <C-p> :Telescope find_files<CR>
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -185,6 +190,16 @@ vnoremap <C-j> :m '>+1<CR>gvgv
 
 nmap <C-s> :w<CR>
 nmap <C-q> :q<CR>
+
+nnoremap [q :cprev<CR>
+nnoremap ]q :cnext<CR>
+inoremap [q :cprev<CR>
+inoremap ]q :cnext<CR>
+
+nnoremap [l :lprev<CR>
+nnoremap ]l :lnext<CR>
+inoremap [l :lprev<CR>
+inoremap ]l :lnext<CR>
 
 let mapleader = "\<Space>"
 nnoremap <leader>q :Bdelete<CR>
@@ -210,12 +225,16 @@ nnoremap <leader>tag :TagbarToggle<CR>
 nnoremap <leader>t :bnext<CR>
 nnoremap <leader>T :bprev<CR>
 
-nnoremap <leader>doc :ALEHover<CR>
+nnoremap <silent>K :ALEHover<CR>
 nnoremap <leader>gk :ALEGoToDefinition<CR>
 
-nnoremap gb :call FZFOpen(':Buffers')<CR>
+nnoremap gb :Telescope buffers<CR>
 
-nnoremap gmb :Dispatch mint build<CR>
+if exists(':terminal')
+    nnoremap gmb :botright terminal ++rows=10 mint build<CR>
+else
+    nnoremap gmb :Dispatch mint build<CR>
+endif
 
 " created this for lack of a simple, lightweight lsp installer plugin
 " supports gopls, pyright installation right now
@@ -224,6 +243,11 @@ function! LspInstall(language)
     execute 'botright terminal ++rows=10 ' . cmd
 endfunction
 command! -nargs=* LspInstall call LspInstall(<q-args>)
+
+augroup xmlfold
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
