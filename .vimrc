@@ -128,9 +128,10 @@ let g:ale_python_pyright_executable = $HOME . '/.local/share/installed-lsp-serve
 let g:ale_java_eclipselsp_path = $HOME . '/.local/share/installed-lsp-servers/eclipse-jdtls'
 let g:ale_java_eclipselsp_executable = '/export/apps/jdk/JDK-11_0_8-msft/bin/java'
 
-augroup ale_jdtls
+augroup java_jdtls
     autocmd!
-    au BufRead,BufNewFile *.java let b:ale_command_wrapper = 'GRADLE_HOME=' . $HOME . '/.gradle/ligradle/gradle-5.2.1'
+    au BufRead,BufNewFile *.java let b:ale_command_wrapper = 'GRADLE_HOME=' . $HOME . '/.gradle/ligradle/gradle-5.6.4'
+    au FileType java setlocal shiftwidth=2 tabstop=2
 augroup END
 
 " need to start vim with venv activated
@@ -260,3 +261,6 @@ augroup xmlfold
     autocmd!
     autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
 augroup END
+
+nnoremap <leader>rbc :Dispatch git-review create -r
+nnoremap <leader>rbu :Dispatch git-review update<CR>
