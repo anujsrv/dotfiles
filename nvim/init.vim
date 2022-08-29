@@ -274,3 +274,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+nnoremap <leader>rbc :Dispatch git-review create -r
+nnoremap <leader>rbu :Dispatch git-review update<CR>
