@@ -4,12 +4,16 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'airblade/vim-gitgutter'
+-- Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+-- Plug 'airblade/vim-gitgutter'
 
 -- colorschemes
 Plug 'nanotech/jellybeans.vim'
-Plug 'morhetz/gruvbox'
+-- Plug 'morhetz/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'sainnhe/gruvbox-material'
 
 -- run async builds and test suites
 Plug 'tpope/vim-dispatch'
@@ -36,6 +40,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug('nvim-telescope/telescope.nvim', { tag = '0.1.0' })
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 vim.call('plug#end')
 

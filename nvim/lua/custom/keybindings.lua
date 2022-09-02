@@ -30,3 +30,5 @@ vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', {noremap = true})
 vim.keymap.set('n', 'gb', '<cmd>Telescope buffers<CR>', {noremap = true})
 
 vim.keymap.set('n', 'gmb', ':Dispatch mint build<CR>', {noremap = true})
+vim.keymap.set('n', '<leader>rbc', ':Dispatch git-review create -r', {noremap = true})
+vim.keymap.set('n', '<leader>rbu', ':Dispatch git-review update<CR>', {noremap = true})
