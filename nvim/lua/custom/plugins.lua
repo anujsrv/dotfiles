@@ -2,6 +2,7 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
+vim.cmd [[set rtp+=~/.fzf]]
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 -- Plug 'vim-airline/vim-airline'
@@ -14,6 +15,8 @@ Plug 'nanotech/jellybeans.vim'
 -- Plug 'morhetz/gruvbox'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'sainnhe/gruvbox-material'
+Plug 'EdenEast/nightfox.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 -- run async builds and test suites
 Plug 'tpope/vim-dispatch'
@@ -25,6 +28,9 @@ Plug 'vim-test/vim-test'
 -- Plug 'dense-analysis/ale'
 Plug 'ackyshake/VimCompletesMe'
 Plug 'neovim/nvim-lspconfig'
+
+-- copilot
+Plug 'github/copilot.vim'
 
 -- minimalistic auto-completion
 -- Plug 'ajh17/VimCompletesMe'
@@ -41,6 +47,7 @@ Plug('nvim-telescope/telescope.nvim', { tag = '0.1.0' })
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-treesitter/playground'
 
 vim.call('plug#end')
 

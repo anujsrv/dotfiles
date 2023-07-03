@@ -26,9 +26,14 @@ vim.keymap.set('n', '<leader>tag', ':TagbarToggle<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>t', ':bnext<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>T', ':bprev<CR>', {noremap = true})
 
-vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', {noremap = true})
-vim.keymap.set('n', 'gb', '<cmd>Telescope buffers<CR>', {noremap = true})
+-- vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', {noremap = true})
+-- vim.keymap.set('n', 'gb', '<cmd>Telescope buffers<CR>', {noremap = true})
+vim.keymap.set('n', '<C-p>', ':FZF<CR>', {noremap = true})
+vim.keymap.set('n', 'gb', ':Buffers<CR>', {noremap = true})
 
 vim.keymap.set('n', 'gmb', ':Dispatch mint build<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>rbc', ':Dispatch git-review create -r', {noremap = true})
 vim.keymap.set('n', '<leader>rbu', ':Dispatch git-review update<CR>', {noremap = true})
+
+vim.keymap.set('n', '[q', ':cprev<CR>', {noremap = true})
+vim.keymap.set('n', ']q', ':cnext<CR>', {noremap = true})
