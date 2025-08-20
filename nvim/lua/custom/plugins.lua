@@ -1,53 +1,70 @@
-local Plug = vim.fn['plug#']
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
-vim.call('plug#begin', '~/.config/nvim/plugged')
+require("lazy").setup({
+    -- FZF and file navigation
+    { "junegunn/fzf", dir = "~/.fzf", build = "./install --all" },
+    { "junegunn/fzf.vim" },
+    { "preservim/nerdtree" },
 
-vim.cmd [[set rtp+=~/.fzf]]
-Plug 'junegunn/fzf.vim'
-Plug 'preservim/nerdtree'
--- Plug 'vim-airline/vim-airline'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'lewis6991/gitsigns.nvim'
--- Plug 'airblade/vim-gitgutter'
+    -- Status line
+    { "nvim-lualine/lualine.nvim" },
+    { "lewis6991/gitsigns.nvim" },
 
--- colorschemes
-Plug 'nanotech/jellybeans.vim'
--- Plug 'morhetz/gruvbox'
-Plug 'ellisonleao/gruvbox.nvim'
-Plug 'sainnhe/gruvbox-material'
-Plug 'EdenEast/nightfox.nvim'
-Plug 'rebelot/kanagawa.nvim'
+    -- Colorschemes
+    { "nanotech/jellybeans.vim" },
+    { "ellisonleao/gruvbox.nvim" },
+    { "sainnhe/gruvbox-material" },
+    { "EdenEast/nightfox.nvim" },
+    { "rebelot/kanagawa.nvim" },
 
--- run async builds and test suites
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
--- for running tests
-Plug 'vim-test/vim-test'
+    -- Async builds and test suites
+    { "tpope/vim-dispatch" },
+    { "tpope/vim-fugitive" },
+    { "vim-test/vim-test" },
 
--- for linting + as a LSP client
--- Plug 'dense-analysis/ale'
-Plug 'ackyshake/VimCompletesMe'
-Plug 'neovim/nvim-lspconfig'
+    -- LSP and completion
+    { "neovim/nvim-lspconfig" },
 
--- copilot
-Plug 'github/copilot.vim'
+    -- Copilot
+    { "github/copilot.vim" },
+    { "jellydn/CopilotChat.nvim" },
 
--- minimalistic auto-completion
--- Plug 'ajh17/VimCompletesMe'
+    -- Surround, tags, and misc
+    { "tpope/vim-surround" },
+    { "preservim/tagbar" },
+    { "unblevable/quick-scope" },
+    { "moll/vim-bbye" },
 
-Plug 'tpope/vim-surround'
-Plug 'preservim/tagbar'
-Plug 'unblevable/quick-scope'
-Plug 'moll/vim-bbye'
+    -- Telescope
+    { "nvim-lua/popup.nvim" },
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope.nvim", tag = "0.1.0" },
 
--- telescope.nvim
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug('nvim-telescope/telescope.nvim', { tag = '0.1.0' })
+    -- Treesitter
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter-context" },
+    { "nvim-treesitter/playground" },
 
-Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'nvim-treesitter/playground'
+    -- Markdown rendering
+    { "MunifTanjim/nui.nvim" },
+    { "MeanderingProgrammer/render-markdown.nvim" },
 
-vim.call('plug#end')
+    -- Icons and UI enhancements
+    { "nvim-tree/nvim-web-devicons" },
+    { "folke/snacks.nvim" },
+
+    -- Avante.nvim
+    { "yetone/avante.nvim", branch = "main", build = "make" },
+})
 

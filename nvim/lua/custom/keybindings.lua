@@ -14,7 +14,6 @@ vim.keymap.set('n', '<leader>q', ':Bdelete<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>nu', ':set nu!<CR>', {noremap = true})
 -- vim.keymap.set('n', '<leader>vi', ':edit ~/.config/nvim/init.lua<CR>', {noremap = true})
 
-vim.keymap.set('n', '<leader>at', ':ALEToggle<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>nt', ':NERDTreeToggle<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>nf', ':NERDTreeFind<CR>', {noremap = true})
 
@@ -32,8 +31,6 @@ vim.keymap.set('n', '<C-p>', ':FZF<CR>', {noremap = true})
 vim.keymap.set('n', 'gb', ':Buffers<CR>', {noremap = true})
 
 vim.keymap.set('n', 'gmb', ':Dispatch mint build<CR>', {noremap = true})
-vim.keymap.set('n', '<leader>rbc', ':Dispatch git-review create -r', {noremap = true})
-vim.keymap.set('n', '<leader>rbu', ':Dispatch git-review update<CR>', {noremap = true})
 
 vim.keymap.set('n', '[q', ':cprev<CR>', {noremap = true})
 vim.keymap.set('n', ']q', ':cnext<CR>', {noremap = true})
